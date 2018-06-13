@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+docker build -t rappdw/python-node:p3.6.5-n8.11.3-slim-jessie .
