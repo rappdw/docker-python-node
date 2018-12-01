@@ -1,7 +1,10 @@
-FROM python:3.6.5-slim-jessie
+FROM python:3.6.7-slim-jessie
 
-RUN groupadd --gid 1000 node \
-  && useradd --uid 1000 --gid node --shell /bin/bash --create-home node
+# setup uig and gid to 2000. This is mostly done so that derived images, like docker-ds, can use
+# 1000 which is commonly the UID of the person running the container in Resero environments and
+# when mounting a host directory into the container, allows for appropriate file access, etc.
+RUN groupadd --gid 2000 node \
+  && useradd --uid 2000 --gid node --shell /bin/bash --create-home node
 
 # gpg keys listed at https://github.com/nodejs/node#release-team
 RUN set -ex \
