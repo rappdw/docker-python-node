@@ -3,7 +3,6 @@ FROM python:3.6-slim
 # setup uig and gid to 2000. This is mostly done so that derived images, like docker-ds, can use
 # 1000 which is commonly the UID of the person running the container in Resero environments and
 # when mounting a host directory into the container, allows for appropriate file access, etc.
-# https://github.com/nodejs/docker-node/blob/de76fb48b532d6be012098dc3538bd15329a27d0/8/stretch-slim/Dockerfile
 RUN groupadd --gid 2000 node \
   && useradd --uid 2000 --gid node --shell /bin/bash --create-home node
 
