@@ -8,7 +8,14 @@ RUN groupadd --gid 2000 node \
 
 ENV NODE_VERSION 8.15.1
 
-RUN buildDeps='xz-utils' \
+# workaround for issue where gpg reports "keyserver received failed: Cannot assign requested address"
+# see: https://github.com/inversepath/usbarmory-debian-base_image/issues/9
+RUN mkdir ~/.gnupg; \
+    chmod 600 ~/.gnupg; \
+    echo "disable-ipv6" >> ~/.gnupg/dirmngr.conf
+
+RUN set -ex; \
+    buildDeps='xz-utils' \
     && ARCH= && dpkgArch="$(dpkg --print-architecture)" \
     && case "${dpkgArch##*-}" in \
       amd64) ARCH='x64';; \
