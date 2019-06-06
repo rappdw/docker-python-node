@@ -1,4 +1,4 @@
-FROM python:3.6-slim
+FROM python:3.6
 
 # setup uig and gid to 2000. This is mostly done so that derived images, like docker-ds, can use
 # 1000 which is commonly the UID of the person running the container in Resero environments and
