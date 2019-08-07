@@ -6,7 +6,7 @@ FROM python:3.6-slim
 RUN groupadd --gid 2000 node \
   && useradd --uid 2000 --gid node --shell /bin/bash --create-home node
 
-ENV NODE_VERSION 8.15.1
+ENV NODE_VERSION 8.16.0
 
 # workaround for issue where gpg reports "keyserver received failed: Cannot assign requested address"
 # see: https://github.com/inversepath/usbarmory-debian-base_image/issues/9
@@ -14,7 +14,7 @@ RUN mkdir ~/.gnupg; \
     chmod 600 ~/.gnupg; \
     echo "disable-ipv6" >> ~/.gnupg/dirmngr.conf
 
-RUN set -ex; \
+RUN set -e; \
     buildDeps='xz-utils' \
     && ARCH= && dpkgArch="$(dpkg --print-architecture)" \
     && case "${dpkgArch##*-}" in \
@@ -55,7 +55,7 @@ RUN set -ex; \
     && apt-get purge -y --auto-remove $buildDeps \
     && ln -s /usr/local/bin/node /usr/local/bin/nodejs
 
-ENV YARN_VERSION 1.12.3
+ENV YARN_VERSION 1.15.2
 
 RUN set -ex \
   && for key in \
@@ -72,7 +72,7 @@ RUN set -ex \
   && tar -xzf yarn-v$YARN_VERSION.tar.gz -C /opt/ \
   && ln -s /opt/yarn-v$YARN_VERSION/bin/yarn /usr/local/bin/yarn \
   && ln -s /opt/yarn-v$YARN_VERSION/bin/yarnpkg /usr/local/bin/yarnpkg \
-&& rm yarn-v$YARN_VERSION.tar.gz.asc yarn-v$YARN_VERSION.tar.gz
+  && rm yarn-v$YARN_VERSION.tar.gz.asc yarn-v$YARN_VERSION.tar.gz
 
 COPY ./docker-entrypoint.sh /
 CMD []
